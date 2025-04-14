@@ -1,107 +1,28 @@
+/**
+ * @file mainwindow.cpp
+ * @brief Implementation of the MainWindow class.
+ */
+
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-QMap<QString, int> idMap;
-
-QString getAppDataPath() {
-    QString path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-
-    QDir dir(path);
-    if (!dir.exists()) {
-        dir.mkpath(".");
-        dir.mkpath("db");
-    }
-
-    return path;
-}
-
-QStringList loadCityData(const QString &filePath) {
-    QStringList cityList;
-    QFile file(filePath);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Could not open file:" << filePath;
-        return cityList;
-    }
-
-    QByteArray jsonData = file.readAll();
-    file.close();
-
-    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
-    if (!doc.isArray()) {
-        qWarning() << "Invalid JSON format.";
-        return cityList;
-    }
-
-    QJsonArray jsonArray = doc.array();
-    for (const QJsonValue &value : jsonArray) {
-        if (!value.isObject()) continue;
-        QJsonObject obj = value.toObject();
-
-        int id = obj["id"].toInt();
-        QString city = obj["city"].toString();
-        QString district = obj["district"].toString();
-        QString province = obj["province"].toString();
-        QString stationStreet = obj["station_street"].toString();
-
-        QString displayText = QString("%1, %2, %3, %4").arg(city, district, province, stationStreet);
-        cityList.append(displayText);
-        idMap[displayText] = id;
-    }
-
-    return cityList;
-}
-
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), isFromInternet(false) // Initialize data source flag
 {
     ui->setupUi(this);
-
-    // API
+    // Initialize API client and connect signals
     apiClient = new ApiClient(this);
-    // Get all stations
-    connect(apiClient, &ApiClient::allStationsProcessed,
-            this, &MainWindow::handleStationsData);
+    connect(apiClient, &ApiClient::allStationsProcessed, this, &MainWindow::handleStationsData);
+    connect(apiClient, &ApiClient::stationDetailsReceived, this, &MainWindow::handleStationDetails);
+    connect(apiClient, &ApiClient::sensorDataReceived, this, &MainWindow::handleSensorData);
+    connect(apiClient, &ApiClient::statusChanged, this, &MainWindow::handleStatusChanged);
+    connect(apiClient, &ApiClient::errorOccurred, this, &MainWindow::handleApiError);
 
-    // Get stations detail
-    connect(apiClient, &ApiClient::stationDetailsReceived,
-            this, &MainWindow::handleStationDetails);
-
-    connect(apiClient, &ApiClient::sensorDataReceived,
-            this, &MainWindow::handleSensorData);
-
-    connect(apiClient, &ApiClient::statusChanged,
-            this, &MainWindow::handleStatusChanged);
-
-    connect(apiClient, &ApiClient::errorOccurred,
-            this, &MainWindow::handleApiError);
-
-    // Check the internet
-    if(apiClient->checkNetConnection()){
-        // good
-    }
-    else{
-        // bad
-    }
-
-    // Get stations json
-    QFile file(getAppDataPath() + "/citySearchData.json");
-    if (file.exists()) {
+    // Try to load cached city data first
+    QString cachePath = dbAccess.getAppDataPath() + "/citySearchData.json";
+    if (QFile::exists(cachePath))
         makeAutoComplete();
-    }
-    else{
-        apiClient->getAllStations();
-    }
-}
-
-void MainWindow::makeAutoComplete(){
-    QStringList cityList = loadCityData(getAppDataPath() + "/citySearchData.json");
-    QCompleter *completer = new QCompleter(cityList);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    completer->setFilterMode(Qt::MatchContains);
-    ui->cityInput->setCompleter(completer);
+    else
+        apiClient->getAllStations(); // Fetch fresh data if no cache exists
 }
 
 MainWindow::~MainWindow()
@@ -110,136 +31,121 @@ MainWindow::~MainWindow()
     delete apiClient;
 }
 
+/**
+ * @brief Initializes city search autocomplete
+ */
+void MainWindow::makeAutoComplete()
+{
+    QString cachePath = dbAccess.getAppDataPath() + "/citySearchData.json";
+    QStringList cityList = dbAccess.loadCityData(cachePath);
+
+    QCompleter *completer = new QCompleter(cityList, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    completer->setFilterMode(Qt::MatchContains);
+    ui->cityInput->setCompleter(completer);
+}
+
+/**
+ * @brief Handles city search button click event
+ */
 void MainWindow::onCitySearchClicked()
 {
     QString city = ui->cityInput->text();
-    int id = idMap[city];
 
-    if(id == 0){
-        ui->resultBrowser->setText("Wybierz poprawna nazwe!");
+    // Validate city selection
+    if (!dbAccess.idMap.contains(city) || dbAccess.idMap[city] == 0) {
+        ui->resultBrowser->setText("Please select a valid city name!");
         return;
     }
 
-    apiClient->getStationDetails(id);
+    currentLocation = city;
+    apiClient->getStationDetails(dbAccess.idMap[city]);
 }
+
+/**
+ * @brief Processes station list data and caches it locally
+ * @param data JSON array containing station data
+ */
 void MainWindow::handleStationsData(const QJsonArray &data)
 {
-    QFile file(getAppDataPath() + "/citySearchData.json");
-    if (!file.open(QIODevice::WriteOnly)) {
-        return;
+    QFile file(dbAccess.getAppDataPath() + "/citySearchData.json"); // Saves
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(QJsonDocument(data).toJson(QJsonDocument::Indented));
+        file.close();
     }
-
-    QJsonDocument doc(data);
-    file.write(doc.toJson(QJsonDocument::Indented));
-    file.close();
 
     makeAutoComplete();
 }
 
+/**
+ * @brief Processes station details and creates sensor buttons
+ * @param details JSON object containing sensor information
+ */
 void MainWindow::handleStationDetails(const QJsonObject &details)
 {
-    qDebug() << "Raw station details:" << details;
-
     clearSensorButtons();
 
-    // Check if "data" field exists
     if (!details.contains("data")) {
-        qDebug() << "No 'data' field in response";
+        qDebug() << "Invalid station details format";
         return;
     }
 
     QJsonArray sensorsData = details["data"].toArray();
     if (sensorsData.isEmpty()) {
-        qDebug() << "Empty sensors data array";
+        qDebug() << "No sensors found for this station";
         return;
     }
 
+    // Create layout for sensor buttons
     QWidget *container = ui->sensorScrollArea->widget();
-    if (!container) {
-        qDebug() << "Scroll area container not found";
-        container = new QWidget();
-        ui->sensorScrollArea->setWidget(container);
-        container->setLayout(new QVBoxLayout());
-    }
+    QVBoxLayout *layout = container->layout() ? qobject_cast<QVBoxLayout*>(container->layout()) : new QVBoxLayout(container);
+    layout->setAlignment(Qt::AlignTop);
 
-    QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(container->layout());
-    if (!layout) {
-        layout = new QVBoxLayout(container);
-        layout->setAlignment(Qt::AlignTop);
-    }
-
+    // Create button for each sensor
     for (const QJsonValue &sensorValue : sensorsData) {
         QJsonObject sensor = sensorValue.toObject();
-
-        // Access the nested "param" object
         QJsonObject param = sensor["param"].toObject();
 
         QString paramName = param["paramName"].toString();
         QString paramCode = param["paramCode"].toString();
-        int sensorId = sensor["id"].toInt();  // Use this ID for requests
+        int sensorId = sensor["id"].toInt();
 
-        qDebug() << "Creating button for:" << paramName << "(" << paramCode << ") ID:" << sensorId;
+        QPushButton *btn = new QPushButton(QString("%1 (%2)").arg(paramName, paramCode), container);
 
-        QPushButton *btn = new QPushButton(
-            QString("%1 (%2)").arg(paramName).arg(paramCode),
-            container
-            );
-
-        // Store both the display code and the actual ID
+        // Store sensor metadata in button properties
         btn->setProperty("paramCode", paramCode);
         btn->setProperty("sensorId", sensorId);
-
-        // Style the button
         btn->setMinimumHeight(40);
-        btn->setStyleSheet(
-            "QPushButton {"
-            "   background-color: #4CAF50;"
-            "   color: white;"
-            "   padding: 8px;"
-            "   border-radius: 4px;"
-            "   margin: 2px;"
-            "}"
-            "QPushButton:hover { background-color: #45a049; }"
-            );
 
+        // Connect button to data fetch
         connect(btn, &QPushButton::clicked, this, [this, btn]() {
-            int sensorId = btn->property("sensorId").toInt();
-            qDebug() << "Requesting data for sensor ID:" << sensorId;
-            apiClient->getSensorData(sensorId);
-
-            // Highlight button
-            for (QPushButton *otherBtn : sensorButtons) {
-                otherBtn->setStyleSheet(
-                    otherBtn == btn ?
-                        "background-color: #45a049;" :
-                        "background-color: #4CAF50;"
-                    );
-            }
+            isFromInternet = true;
+            apiClient->getSensorData(btn->property("sensorId").toInt());
         });
 
         layout->addWidget(btn);
         sensorButtons.append(btn);
     }
 
-    // Ensure proper layout update
     container->adjustSize();
-    qDebug() << "Created" << sensorButtons.size() << "sensor buttons";
 }
 
+/**
+ * @brief Clears all sensor buttons from the UI and memory.
+ * @details Removes buttons both from the layout and deallocates memory.
+ */
 void MainWindow::clearSensorButtons()
 {
-    // First clear all buttons from memory
     qDeleteAll(sensorButtons);
     sensorButtons.clear();
 
-    // Then clear them from the layout
     QWidget *container = ui->sensorScrollArea->widget();
     if (!container) return;
 
     QLayout *layout = container->layout();
     if (layout) {
         QLayoutItem *item;
-        while ((item = layout->takeAt(0)) != nullptr) {  // Fixed while condition
+        while ((item = layout->takeAt(0)) != nullptr) {
             if (item->widget()) {
                 delete item->widget();
             }
@@ -248,18 +154,19 @@ void MainWindow::clearSensorButtons()
     }
 }
 
+/**
+ * @brief Processes and visualizes sensor data.
+ * @param data JSON object containing sensor measurements.
+ * @details Creates an interactive chart with time range sliders and statistics.
+ */
 void MainWindow::handleSensorData(const QJsonObject &data)
 {
-    qDebug() << "Sensor data received:" << data;
-
-    // Clear previous content
+    // Clear previous visualization
     QWidget *oldWidget = ui->resultScrollArea->takeWidget();
-    if (oldWidget) {
-        delete oldWidget;
-    }
+    delete oldWidget;
 
     if (!data.contains("values")) {
-        qWarning() << "No 'values' in sensor data";
+        qWarning() << "Missing values in sensor data";
         return;
     }
 
@@ -269,47 +176,58 @@ void MainWindow::handleSensorData(const QJsonObject &data)
         return;
     }
 
-    // Create chart and series
+    // Initialize chart components
     QChart *chart = new QChart();
     QLineSeries *series = new QLineSeries();
-
+    QLineSeries *fullSeries = new QLineSeries();
     QString paramName = data["key"].toString();
+
+    // Initialize statistics tracking
     double minValue = std::numeric_limits<double>::max();
     double maxValue = std::numeric_limits<double>::min();
     double sum = 0;
     int validCount = 0;
+    QDateTime minDate, maxDate;
 
-    // Parse and sort data by date (newest first)
-    QVector<QPair<QDateTime, double>> measurements;
+    // Process each measurement point
     for (const QJsonValue &value : values) {
         QJsonObject measurement = value.toObject();
-        QString valueStr = measurement["value"].toString();
-        if (valueStr == "null") continue;
 
-        QDateTime dateTime = QDateTime::fromString(measurement["date"].toString(), "yyyy-MM-dd HH:mm:ss");
-        if (!dateTime.isValid()) {
-            qWarning() << "Invalid date format:" << measurement["date"].toString();
-            continue;
+        // Parse values
+        double val = 0;
+        bool validValue = false;
+        QJsonValue valueJson = measurement["value"];
+
+        if (valueJson.isString()) {
+            QString valueStr = valueJson.toString();
+            if (valueStr != "null") {
+                val = valueStr.toDouble(&validValue);
+            }
+        } else if (valueJson.isDouble()) {
+            val = valueJson.toDouble();
+            validValue = true;
         }
 
-        double val = valueStr.toDouble();
-        measurements.append(qMakePair(dateTime, val));
-    }
+        if (!validValue) continue;
 
-    // Sort measurements by date (oldest first)
-    std::sort(measurements.begin(), measurements.end(),
-              [](const QPair<QDateTime, double> &a, const QPair<QDateTime, double> &b) {
-                  return a.first < b.first;
-              });
+        // Parse timestamp
+        QDateTime dateTime = QDateTime::fromString(measurement["date"].toString(), "yyyy-MM-dd HH:mm:ss");
+        if (!dateTime.isValid()) continue;
 
-    // Add points to series and calculate stats
-    for (const auto &measurement : measurements) {
-        series->append(measurement.first.toMSecsSinceEpoch(), measurement.second);
+        // Add point to series
+        QPointF point(dateTime.toMSecsSinceEpoch(), val);
+        series->append(point);
+        fullSeries->append(point);
 
-        if (measurement.second < minValue) minValue = measurement.second;
-        if (measurement.second > maxValue) maxValue = measurement.second;
-        sum += measurement.second;
+        // Update statistics
+        minValue = qMin(minValue, val);
+        maxValue = qMax(maxValue, val);
+        sum += val;
         validCount++;
+
+        // Update date range
+        if (!minDate.isValid() || dateTime < minDate) minDate = dateTime;
+        if (!maxDate.isValid() || dateTime > maxDate) maxDate = dateTime;
     }
 
     if (validCount == 0) {
@@ -317,82 +235,212 @@ void MainWindow::handleSensorData(const QJsonObject &data)
         return;
     }
 
-    double avgValue = sum / validCount;
+    // Create time range sliders
+    QWidget *sliderContainer = new QWidget();
+    QVBoxLayout *sliderLayout = new QVBoxLayout(sliderContainer);
 
-    // Configure chart
-    chart->addSeries(series);
-    chart->setTitle(QString("%1 Measurements").arg(paramName));
-    chart->legend()->hide();
+    QLabel *sliderLabel = new QLabel("Select time range:");
+    QSlider *startSlider = new QSlider(Qt::Horizontal);
+    QSlider *endSlider = new QSlider(Qt::Horizontal);
 
-    // X-axis (time)
+    startSlider->setRange(0, 100);
+    endSlider->setRange(0, 100);
+    startSlider->setValue(0);
+    endSlider->setValue(100);
+
+    sliderLayout->addWidget(sliderLabel);
+    sliderLayout->addWidget(startSlider);
+    sliderLayout->addWidget(endSlider);
+
+    // Configure chart axes
     QDateTimeAxis *axisX = new QDateTimeAxis();
-    axisX->setFormat("dd.MM.yy\nhh:mm");
+    axisX->setFormat("dd.MM HH:mm");
     axisX->setTitleText("Time");
-    chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
+    axisX->setRange(minDate, maxDate);
 
-    // Y-axis (values)
     QValueAxis *axisY = new QValueAxis();
-    axisY->setTitleText(paramName);
+    axisY->setTitleText(paramName + " (µg/m³)");
+    axisY->setRange(minValue > 0 ? 0 : minValue * 1.1, maxValue * 1.1);
+
+    // Assemble chart
+    chart->addSeries(series);
+    chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
     series->attachAxis(axisY);
+    chart->legend()->hide();
+    chart->setTitle(paramName + " Measurements");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
 
     // Create chart view
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Create container with stats
+    // Create main container
     QWidget *container = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(container);
+    QLabel *statsLabel = new QLabel();
+    layout->addWidget(statsLabel);
 
-    // Add stats label
-    QLabel *statsLabel = new QLabel(
-        QString("<b>Statistics for %1:</b><br>"
-                "Minimum: %2<br>"
-                "Maximum: %3<br>"
-                "Average: %4<br>"
-                "Measurements: %5")
-            .arg(paramName)
-            .arg(minValue, 0, 'f', 1)
-            .arg(maxValue, 0, 'f', 1)
-            .arg(avgValue, 0, 'f', 1)
-            .arg(validCount));
-    statsLabel->setTextFormat(Qt::RichText);
+    /**
+     * @brief Updates chart and statistics based on current slider positions.
+     */
+    auto updateChart = [=]() {
+        int startPercent = startSlider->value();
+        int endPercent = endSlider->value();
 
+        // Validate slider positions
+        if (startPercent > endPercent) return;
+
+        // Calculate time range
+        qint64 totalSpan = minDate.secsTo(maxDate);
+        QDateTime startTime = minDate.addSecs(totalSpan * startPercent / 100);
+        QDateTime endTime = minDate.addSecs(totalSpan * endPercent / 100);
+
+        // Filter points within time range
+        QLineSeries *filtered = new QLineSeries();
+        for (const QPointF &point : fullSeries->points()) {
+            QDateTime t = QDateTime::fromMSecsSinceEpoch(point.x());
+            if (t >= startTime && t <= endTime) {
+                filtered->append(point);
+            }
+        }
+
+        // Calculate filtered statistics
+        QString trendText = "Not enough data";
+        double filteredMin = 99999;
+        double filteredMax = -99999;
+        double filteredSum = 0;
+        int filteredCount = filtered->count();
+
+        if (filteredCount >= 1) {
+            for (const QPointF &point : filtered->points()) {
+                double y = point.y();
+                filteredMin = qMin(filteredMin, y);
+                filteredMax = qMax(filteredMax, y);
+                filteredSum += y;
+            }
+
+            // Determine trend if enough points
+            if (filteredCount >= 2) {
+                double first = filtered->at(0).y();
+                double last = filtered->at(filteredCount - 1).y();
+                double delta = last - first;
+
+                if (qAbs(delta) < 0.1 * qAbs(first))
+                    trendText = "Stable";
+                else
+                    trendText = (delta > 0) ? "Falling trend" : "Rising trend";
+            }
+        }
+
+        // Update statistics display
+        statsLabel->setText(
+            QString("<b>Location:</b> %1<br>"
+                    "<b>Parameter:</b> %2<br>"
+                    "<b>Minimum:</b> %3 µg/m³<br>"
+                    "<b>Maximum:</b> %4 µg/m³<br>"
+                    "<b>Average:</b> %5 µg/m³<br>"
+                    "<b>Measurements:</b> %6<br>"
+                    "<b>Trend:</b> %7")
+                .arg(currentLocation.isEmpty() ? "Unknown" : currentLocation)
+                .arg(paramName)
+                .arg(filteredMin, 0, 'f', 1)
+                .arg(filteredMax, 0, 'f', 1)
+                .arg(filteredCount > 0 ? filteredSum / filteredCount : 0.0, 0, 'f', 1)
+                .arg(filteredCount).arg(trendText)
+            );
+
+        // Update chart display
+        chart->removeAllSeries();
+        chart->addSeries(filtered);
+        filtered->attachAxis(axisX);
+        filtered->attachAxis(axisY);
+    };
+
+    // Connect slider signals
+    connect(startSlider, &QSlider::valueChanged, this, [=]() {
+        if (startSlider->value() > endSlider->value())
+            startSlider->setValue(endSlider->value());
+        updateChart();
+    });
+
+    connect(endSlider, &QSlider::valueChanged, this, [=]() {
+        if (endSlider->value() < startSlider->value())
+            endSlider->setValue(startSlider->value());
+        updateChart();
+    });
+
+    // Initial update
+    updateChart();
+
+    // Assemble UI components
+    layout->addWidget(sliderContainer);
     layout->addWidget(statsLabel);
     layout->addWidget(chartView);
+    layout->setStretch(2, 1); // Give chart most space
 
-    // Set to scroll area
-    ui->resultScrollArea->setWidget(container);
-    container->adjustSize();
+    // Add save button if from the internet
+    if (isFromInternet) {
+        QPushButton *saveButton = new QPushButton("Save to local DB");
+        layout->addWidget(saveButton);
 
-    // After adding all points to the series
-    qDebug() << "Number of points in series:" << series->count();
-    if (series->count() > 0) {
-        qDebug() << "First point:" << series->at(0);
-        qDebug() << "Last point:" << series->at(series->count()-1);
+        connect(saveButton, &QPushButton::clicked, this, [=]() {
+            dbAccess.saveSensorData(data, currentLocation);
+            QMessageBox::information(this, "Saved", "Data has been saved to local database.");
+        });
     }
 
-    // After creating axes
-    qDebug() << "X axis range:" << axisX->min() << "to" << axisX->max();
-    qDebug() << "Y axis range:" << axisY->min() << "to" << axisY->max();
+    // Display the complete widget
+    ui->resultScrollArea->setWidget(container);
+    container->adjustSize();
 }
 
+/**
+ * @brief Handles API error messages.
+ * @param error Error message to display.
+ */
 void MainWindow::handleApiError(const QString &error)
 {
-    qDebug() << error;
-    ui->resultBrowser->setText(error);
+    ui->resultBrowser->setText(error + " Try again! Or check already downloaded data.");
 }
 
+/**
+ * @brief Updates status messages in the UI.
+ * @param status Status message to display.
+ */
 void MainWindow::handleStatusChanged(const QString &status)
 {
-    qDebug() << status;
     ui->resultBrowser->setText(status);
 }
 
-
+/**
+ * @brief Slot for city search button (auto-connected by Qt).
+ */
 void MainWindow::on_citySearch_clicked()
 {
-    onCitySearchClicked();
+    onCitySearchClicked(); // Forward to main implementation
 }
 
+/**
+ * @brief Opens the database browser window.
+ */
+void MainWindow::on_dbOpener_clicked()
+{
+    dbWindow *dbWin = new dbWindow(this);
+    dbWin->setWindowFlag(Qt::Window, true);
+    dbWin->show();
+}
+
+/**
+ * @brief Handles loading data from local database.
+ * @param data JSON data loaded from file.
+ * @param location Location name associated with the data.
+ */
+void MainWindow::handleLoadDb(const QJsonObject &data, QString location)
+{
+    isFromInternet = false; // Mark as local data source
+    ui->resultBrowser->setText("Loaded from local database");
+    currentLocation = location;
+    handleSensorData(data); // Process like API data
+}

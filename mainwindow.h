@@ -22,7 +22,11 @@
 #include <QLineSeries>
 #include <QValueAxis>
 #include <QDateTimeAxis>
+#include <QtMath>
 #include "./apiClient.h"
+#include "./db.h"
+#include "./dbwindow.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,6 +40,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void handleLoadDb(const QJsonObject &data, QString location);
     ~MainWindow();
 
 private slots:
@@ -46,13 +51,17 @@ private slots:
     void handleApiError(const QString &error);
     void handleStatusChanged(const QString &status);
 
-    void on_citySearch_clicked();
+    void on_citySearch_clicked(); // Auto grenerated by QT when trying to change
+    void on_dbOpener_clicked(); // snake case to camel error poped up :/
 
 private:
     Ui::MainWindow *ui;
     QVector<QPushButton*> sensorButtons;
     ApiClient *apiClient;
     QChartView *chartView = nullptr;
+    QString currentLocation;
+    db dbAccess;
+    bool isFromInternet;
 
     void makeAutoComplete();
     void clearSensorButtons();
