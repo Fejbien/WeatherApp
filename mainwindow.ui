@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Wyszukaj</string>
+     <string>Search</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="resultBrowser">
@@ -134,12 +134,12 @@
      <rect>
       <x>560</x>
       <y>30</y>
-      <width>131</width>
+      <width>151</width>
       <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>Otworz baze danych</string>
+     <string>Open DB window</string>
     </property>
    </widget>
   </widget>
