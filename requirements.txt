@@ -1,0 +1,6 @@
+To develop:
+- QT min version 6
+- C++ compiler f.e. gcc
+
+To run:
+- PC with windows 10 (or above)
