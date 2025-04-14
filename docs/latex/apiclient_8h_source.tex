@@ -1,0 +1,49 @@
+\doxysection{apiclient.\+h}
+\hypertarget{apiclient_8h_source}{}\label{apiclient_8h_source}\mbox{\hyperlink{apiclient_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ APICLIENT\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ APICLIENT\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QtNetwork/QNetworkAccessManager>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QtNetwork/QNetworkReply>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QJsonDocument>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_api_client_a7ac17ab761c4ee56fa63802573b343e3}{ApiClient}}\ :\ \textcolor{keyword}{public}\ QObject\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_api_client_a7ac17ab761c4ee56fa63802573b343e3}{ApiClient}}(QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_ac54cf5bb723d03765238565bfdef065a}{getAllStations}}();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_afc68cfd09e6e44098ee716410e10d6d7}{getStationDetails}}(\textcolor{keywordtype}{int}\ stationId);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_ae9063dbfeb9f8deb0398562a13aae7bd}{getSensorData}}(\textcolor{keywordtype}{int}\ sensorId);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ signals:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_a00b7f0741b95f89ba84d9211c04e4377}{allStationsProcessed}}(\textcolor{keyword}{const}\ QJsonArray\ \&filteredData);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_a4ce4f564581ba345ed4886583fa58796}{stationDetailsReceived}}(\textcolor{keyword}{const}\ QJsonObject\ \&details);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_a87a8198e66593a106fc0d7fad0829640}{sensorDataReceived}}(\textcolor{keyword}{const}\ QJsonObject\ \&data);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_a85279513926ec1d33c11dddf7782cb34}{errorOccurred}}(\textcolor{keyword}{const}\ QString\ \&error);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_aa3bfef976f2dfbd612eabcf210a06265}{statusChanged}}(\textcolor{keyword}{const}\ QString\ \&status);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00085\ \ \ \ \ QNetworkAccessManager\ *\mbox{\hyperlink{class_api_client_a1b82f8888490dc631ba559510b92df64}{manager}};\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{const}\ QString\ \mbox{\hyperlink{class_api_client_a90543ecceb95468f6736e8fe23db3061}{baseUrl}}\ =\ \textcolor{stringliteral}{"{}https://api.gios.gov.pl/pjp-\/api/rest"{}};\ }
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_a18da754c8a1ef8f1b49bd0e5048b0e4e}{processStationsData}}(\textcolor{keyword}{const}\ QJsonArray\ \&stations);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_api_client_a69159f1f12e2176551303502aac54e55}{handleResponse}}(QNetworkReply\ *reply,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}(\textcolor{keyword}{const}\ QJsonDocument\&)>\ successHandler);}
+\DoxyCodeLine{00101\ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ APICLIENT\_H}}
+
+\end{DoxyCode}

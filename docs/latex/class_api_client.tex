@@ -1,0 +1,315 @@
+\doxysection{Api\+Client Class Reference}
+\hypertarget{class_api_client}{}\label{class_api_client}\index{ApiClient@{ApiClient}}
+
+
+Provides interface to GIOS REST API for air quality data.  
+
+
+
+
+{\ttfamily \#include $<$apiclient.\+h$>$}
+
+
+
+Inheritance diagram for Api\+Client\+:
+% FIG 0
+
+
+Collaboration diagram for Api\+Client\+:
+% FIG 1
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_api_client_a00b7f0741b95f89ba84d9211c04e4377}{all\+Stations\+Processed}} (const QJson\+Array \&filtered\+Data)
+\begin{DoxyCompactList}\small\item\em Emitted when station list data is processed and ready. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_a4ce4f564581ba345ed4886583fa58796}{station\+Details\+Received}} (const QJson\+Object \&details)
+\begin{DoxyCompactList}\small\item\em Emitted when station details are received. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_a87a8198e66593a106fc0d7fad0829640}{sensor\+Data\+Received}} (const QJson\+Object \&data)
+\begin{DoxyCompactList}\small\item\em Emitted when sensor measurement data is received. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_a85279513926ec1d33c11dddf7782cb34}{error\+Occurred}} (const QString \&error)
+\begin{DoxyCompactList}\small\item\em Emitted when API request fails. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_aa3bfef976f2dfbd612eabcf210a06265}{status\+Changed}} (const QString \&status)
+\begin{DoxyCompactList}\small\item\em Emitted to report status changes during operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_api_client_a7ac17ab761c4ee56fa63802573b343e3}{Api\+Client}} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructs an \doxylink{class_api_client}{Api\+Client} instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_ac54cf5bb723d03765238565bfdef065a}{get\+All\+Stations}} ()
+\begin{DoxyCompactList}\small\item\em Requests list of all air quality monitoring stations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_afc68cfd09e6e44098ee716410e10d6d7}{get\+Station\+Details}} (int station\+Id)
+\begin{DoxyCompactList}\small\item\em Requests details for specific monitoring station. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_ae9063dbfeb9f8deb0398562a13aae7bd}{get\+Sensor\+Data}} (int sensor\+Id)
+\begin{DoxyCompactList}\small\item\em Requests measurement data from specific sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_api_client_a18da754c8a1ef8f1b49bd0e5048b0e4e}{process\+Stations\+Data}} (const QJson\+Array \&stations)
+\begin{DoxyCompactList}\small\item\em Processes raw station data into simplified format. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_api_client_a69159f1f12e2176551303502aac54e55}{handle\+Response}} (QNetwork\+Reply \texorpdfstring{$\ast$}{*}reply, std\+::function$<$ void(const QJson\+Document \&)$>$ success\+Handler)
+\begin{DoxyCompactList}\small\item\em Handles network response and error processing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QNetwork\+Access\+Manager \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_api_client_a1b82f8888490dc631ba559510b92df64}{manager}}
+\begin{DoxyCompactList}\small\item\em Handles network communication. \end{DoxyCompactList}\item 
+const QString \mbox{\hyperlink{class_api_client_a90543ecceb95468f6736e8fe23db3061}{base\+Url}} = "{}https\+://api.\+gios.\+gov.\+pl/pjp-\/api/rest"{}
+\begin{DoxyCompactList}\small\item\em GIOS API base URL. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides interface to GIOS REST API for air quality data. 
+
+This class handles network communication and data processing for\+:
+\begin{DoxyItemize}
+\item Retrieving list of monitoring stations
+\item Fetching station details
+\item Getting sensor measurements 
+\end{DoxyItemize}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_api_client_a7ac17ab761c4ee56fa63802573b343e3}\index{ApiClient@{ApiClient}!ApiClient@{ApiClient}}
+\index{ApiClient@{ApiClient}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{ApiClient()}{ApiClient()}}
+{\footnotesize\ttfamily \label{class_api_client_a7ac17ab761c4ee56fa63802573b343e3} 
+Api\+Client\+::\+Api\+Client (\begin{DoxyParamCaption}\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs an \doxylink{class_api_client}{Api\+Client} instance. 
+
+Constructs the \doxylink{class_api_client}{Api\+Client} and initializes network manager.
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Parent QObject (optional)\\
+\hline
+{\em parent} & Parent QObject (optional). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_api_client_a00b7f0741b95f89ba84d9211c04e4377}\index{ApiClient@{ApiClient}!allStationsProcessed@{allStationsProcessed}}
+\index{allStationsProcessed@{allStationsProcessed}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{allStationsProcessed}{allStationsProcessed}}
+{\footnotesize\ttfamily \label{class_api_client_a00b7f0741b95f89ba84d9211c04e4377} 
+void Api\+Client\+::all\+Stations\+Processed (\begin{DoxyParamCaption}\item[{const QJson\+Array \&}]{filtered\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emitted when station list data is processed and ready. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filtered\+Data} & Processed station data in simplified format \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_api_client_a85279513926ec1d33c11dddf7782cb34}\index{ApiClient@{ApiClient}!errorOccurred@{errorOccurred}}
+\index{errorOccurred@{errorOccurred}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{errorOccurred}{errorOccurred}}
+{\footnotesize\ttfamily \label{class_api_client_a85279513926ec1d33c11dddf7782cb34} 
+void Api\+Client\+::error\+Occurred (\begin{DoxyParamCaption}\item[{const QString \&}]{error}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emitted when API request fails. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Description of the error that occurred \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_api_client_ac54cf5bb723d03765238565bfdef065a}\index{ApiClient@{ApiClient}!getAllStations@{getAllStations}}
+\index{getAllStations@{getAllStations}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{getAllStations()}{getAllStations()}}
+{\footnotesize\ttfamily \label{class_api_client_ac54cf5bb723d03765238565bfdef065a} 
+void Api\+Client\+::get\+All\+Stations (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Requests list of all air quality monitoring stations. 
+
+Fetches all air quality monitoring stations from GIOS API.
+
+\begin{DoxyNote}{Note}
+Emits \doxylink{class_api_client_a00b7f0741b95f89ba84d9211c04e4377}{all\+Stations\+Processed()} or \doxylink{class_api_client_a85279513926ec1d33c11dddf7782cb34}{error\+Occurred()} when complete
+\end{DoxyNote}
+Emits\+:
+\begin{DoxyItemize}
+\item {\ttfamily all\+Stations\+Processed(\+QJson\+Array)} on success.
+\item {\ttfamily error\+Occurred(\+QString)} on network or data format errors. 
+\end{DoxyItemize}\Hypertarget{class_api_client_ae9063dbfeb9f8deb0398562a13aae7bd}\index{ApiClient@{ApiClient}!getSensorData@{getSensorData}}
+\index{getSensorData@{getSensorData}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{getSensorData()}{getSensorData()}}
+{\footnotesize\ttfamily \label{class_api_client_ae9063dbfeb9f8deb0398562a13aae7bd} 
+void Api\+Client\+::get\+Sensor\+Data (\begin{DoxyParamCaption}\item[{int}]{sensor\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Requests measurement data from specific sensor. 
+
+Fetches measurement data for a specific sensor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Id} & Unique identifier of the sensor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Emits \doxylink{class_api_client_a87a8198e66593a106fc0d7fad0829640}{sensor\+Data\+Received()} or \doxylink{class_api_client_a85279513926ec1d33c11dddf7782cb34}{error\+Occurred()} when complete
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Id} & Unique ID of the sensor.\\
+\hline
+\end{DoxyParams}
+Emits\+:
+\begin{DoxyItemize}
+\item {\ttfamily sensor\+Data\+Received(\+QJson\+Object)} on success.
+\item {\ttfamily error\+Occurred(\+QString)} on failure. 
+\end{DoxyItemize}\Hypertarget{class_api_client_afc68cfd09e6e44098ee716410e10d6d7}\index{ApiClient@{ApiClient}!getStationDetails@{getStationDetails}}
+\index{getStationDetails@{getStationDetails}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{getStationDetails()}{getStationDetails()}}
+{\footnotesize\ttfamily \label{class_api_client_afc68cfd09e6e44098ee716410e10d6d7} 
+void Api\+Client\+::get\+Station\+Details (\begin{DoxyParamCaption}\item[{int}]{station\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Requests details for specific monitoring station. 
+
+Fetches sensor details for a specific station.
+
+
+\begin{DoxyParams}{Parameters}
+{\em station\+Id} & Unique identifier of the station \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Emits \doxylink{class_api_client_a4ce4f564581ba345ed4886583fa58796}{station\+Details\+Received()} or \doxylink{class_api_client_a85279513926ec1d33c11dddf7782cb34}{error\+Occurred()} when complete
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em station\+Id} & Unique ID of the station.\\
+\hline
+\end{DoxyParams}
+Emits\+:
+\begin{DoxyItemize}
+\item {\ttfamily station\+Details\+Received(\+QJson\+Object)} on success.
+\item {\ttfamily error\+Occurred(\+QString)} on failure. 
+\end{DoxyItemize}\Hypertarget{class_api_client_a69159f1f12e2176551303502aac54e55}\index{ApiClient@{ApiClient}!handleResponse@{handleResponse}}
+\index{handleResponse@{handleResponse}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{handleResponse()}{handleResponse()}}
+{\footnotesize\ttfamily \label{class_api_client_a69159f1f12e2176551303502aac54e55} 
+void Api\+Client\+::handle\+Response (\begin{DoxyParamCaption}\item[{QNetwork\+Reply \texorpdfstring{$\ast$}{*}}]{reply}{, }\item[{std\+::function$<$ void(const QJson\+Document \&)$>$}]{success\+Handler}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles network response and error processing. 
+
+Handles network responses and errors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reply} & Network reply object \\
+\hline
+{\em success\+Handler} & Callback function for successful responses\\
+\hline
+{\em reply} & Network reply object. \\
+\hline
+{\em success\+Handler} & Callback for processing successful JSON responses.\\
+\hline
+\end{DoxyParams}
+Emits {\ttfamily status\+Changed(\+QString)} or {\ttfamily error\+Occurred(\+QString)}. \Hypertarget{class_api_client_a18da754c8a1ef8f1b49bd0e5048b0e4e}\index{ApiClient@{ApiClient}!processStationsData@{processStationsData}}
+\index{processStationsData@{processStationsData}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{processStationsData()}{processStationsData()}}
+{\footnotesize\ttfamily \label{class_api_client_a18da754c8a1ef8f1b49bd0e5048b0e4e} 
+void Api\+Client\+::process\+Stations\+Data (\begin{DoxyParamCaption}\item[{const QJson\+Array \&}]{stations}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Processes raw station data into simplified format. 
+
+Processes raw station data into a simplified JSON structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em stations} & Raw JSON array of station data from API\\
+\hline
+{\em stations} & Raw QJson\+Array from GIOS API.\\
+\hline
+\end{DoxyParams}
+Extracts\+: city, district, province, and street names. Emits {\ttfamily all\+Stations\+Processed(\+QJson\+Array)} with filtered data. \Hypertarget{class_api_client_a87a8198e66593a106fc0d7fad0829640}\index{ApiClient@{ApiClient}!sensorDataReceived@{sensorDataReceived}}
+\index{sensorDataReceived@{sensorDataReceived}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{sensorDataReceived}{sensorDataReceived}}
+{\footnotesize\ttfamily \label{class_api_client_a87a8198e66593a106fc0d7fad0829640} 
+void Api\+Client\+::sensor\+Data\+Received (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emitted when sensor measurement data is received. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & JSON object containing sensor readings \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_api_client_a4ce4f564581ba345ed4886583fa58796}\index{ApiClient@{ApiClient}!stationDetailsReceived@{stationDetailsReceived}}
+\index{stationDetailsReceived@{stationDetailsReceived}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{stationDetailsReceived}{stationDetailsReceived}}
+{\footnotesize\ttfamily \label{class_api_client_a4ce4f564581ba345ed4886583fa58796} 
+void Api\+Client\+::station\+Details\+Received (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{details}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emitted when station details are received. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em details} & JSON object containing station sensors information \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_api_client_aa3bfef976f2dfbd612eabcf210a06265}\index{ApiClient@{ApiClient}!statusChanged@{statusChanged}}
+\index{statusChanged@{statusChanged}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{statusChanged}{statusChanged}}
+{\footnotesize\ttfamily \label{class_api_client_aa3bfef976f2dfbd612eabcf210a06265} 
+void Api\+Client\+::status\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emitted to report status changes during operations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Current operation status message \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_api_client_a90543ecceb95468f6736e8fe23db3061}\index{ApiClient@{ApiClient}!baseUrl@{baseUrl}}
+\index{baseUrl@{baseUrl}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{baseUrl}{baseUrl}}
+{\footnotesize\ttfamily \label{class_api_client_a90543ecceb95468f6736e8fe23db3061} 
+const QString Api\+Client\+::base\+Url = "{}https\+://api.\+gios.\+gov.\+pl/pjp-\/api/rest"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+GIOS API base URL. 
+
+\Hypertarget{class_api_client_a1b82f8888490dc631ba559510b92df64}\index{ApiClient@{ApiClient}!manager@{manager}}
+\index{manager@{manager}!ApiClient@{ApiClient}}
+\doxysubsubsection{\texorpdfstring{manager}{manager}}
+{\footnotesize\ttfamily \label{class_api_client_a1b82f8888490dc631ba559510b92df64} 
+QNetwork\+Access\+Manager\texorpdfstring{$\ast$}{*} Api\+Client\+::manager\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles network communication. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{apiclient_8h}{apiclient.\+h}}\item 
+\mbox{\hyperlink{apiclient_8cpp}{apiclient.\+cpp}}\end{DoxyCompactItemize}

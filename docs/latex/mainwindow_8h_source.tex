@@ -1,0 +1,74 @@
+\doxysection{mainwindow.\+h}
+\hypertarget{mainwindow_8h_source}{}\label{mainwindow_8h_source}\mbox{\hyperlink{mainwindow_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ MAINWINDOW\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ MAINWINDOW\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <qpushbutton.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <qjsondocument.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <QApplication>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QLineEdit>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QCompleter>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QStringListModel>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QFile>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QJsonDocument>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QJsonArray>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QJsonObject>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QStandardPaths>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QDir>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QtCharts>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QChartView>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <QLineSeries>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <QValueAxis>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <QDateTimeAxis>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <QtMath>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{apiclient_8h}{./apiClient.h}}"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{db_8h}{./db.h}}"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dbwindow_8h}{./dbwindow.h}}"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ QT\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{00032\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_ui}{Ui}}\ \{}
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }MainWindow;}
+\DoxyCodeLine{00034\ \}}
+\DoxyCodeLine{00035\ QT\_END\_NAMESPACE}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}\ :\ \textcolor{keyword}{public}\ QMainWindow}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_a1e6ffc3b3ab230f94bb736e8cc1d09da}{handleLoadDb}}(\textcolor{keyword}{const}\ QJsonObject\ \&data,\ QString\ location);}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}{\string~MainWindow}}();}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_a95f23320f1725a461a601a83bb7e0bac}{onCitySearchClicked}}();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_ac21c71d80df4a3a31f8a5c1cb57f937e}{handleStationsData}}(\textcolor{keyword}{const}\ QJsonArray\ \&data);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_acd1011d95343adef4b472fd4ae474076}{handleStationDetails}}(\textcolor{keyword}{const}\ QJsonObject\ \&details);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_aac84bab6df5f353df88880927042ab28}{handleSensorData}}(\textcolor{keyword}{const}\ QJsonObject\ \&data);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_a1008d34ce6e44d47f20442df3b0448d5}{handleApiError}}(\textcolor{keyword}{const}\ QString\ \&error);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_aacec2d651c5fb039c419d99441d3b5bd}{handleStatusChanged}}(\textcolor{keyword}{const}\ QString\ \&status);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_afd42aabf306cc75eed36a753324a086c}{on\_citySearch\_clicked}}();\ \textcolor{comment}{//\ Auto\ grenerated\ by\ QT\ when\ trying\ to\ change}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_a0067126c3b657cafbcc86bbac00ebbfe}{on\_dbOpener\_clicked}}();\ \textcolor{comment}{//\ snake\ case\ to\ camel\ error\ poped\ up\ :/}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ \ \ Ui::MainWindow\ *\mbox{\hyperlink{class_main_window_a35466a70ed47252a0191168126a352a5}{ui}};}
+\DoxyCodeLine{00059\ \ \ \ \ QVector<QPushButton*>\ \mbox{\hyperlink{class_main_window_a881fda8789d7005008373e0347d00fff}{sensorButtons}};}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_api_client}{ApiClient}}\ *\mbox{\hyperlink{class_main_window_a65e9034db7b7bd4bbc007b216514d2ae}{apiClient}};}
+\DoxyCodeLine{00061\ \ \ \ \ QChartView\ *\mbox{\hyperlink{class_main_window_a65fb64a7b9a722f77bfc022a9f4b5e8b}{chartView}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00062\ \ \ \ \ QString\ \mbox{\hyperlink{class_main_window_a82a7624b4ad7793f8b22bb1048d4911d}{currentLocation}};}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{classdb}{db}}\ \mbox{\hyperlink{class_main_window_a1f5e43e9f4bc1178326203639e08298f}{dbAccess}};}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_main_window_acc9cbc39273ec6f9528879617e423a66}{isFromInternet}};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_ad73f31749d207b92051999af3e220cdd}{makeAutoComplete}}();}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_window_add23d9cc2c6b03dd20c8dcba2e8c9106}{clearSensorButtons}}();}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MAINWINDOW\_H}}
+
+\end{DoxyCode}

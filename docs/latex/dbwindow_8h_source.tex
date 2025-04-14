@@ -1,0 +1,48 @@
+\doxysection{dbwindow.\+h}
+\hypertarget{dbwindow_8h_source}{}\label{dbwindow_8h_source}\mbox{\hyperlink{dbwindow_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ DBWINDOW\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ DBWINDOW\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QScrollArea>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QDir>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_main_window}{MainWindow}};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_ui}{Ui}}\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdb_window}{dbWindow}};}
+\DoxyCodeLine{00021\ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdb_window_a3d9db626cfb9d03189f02d2b92e5d858}{dbWindow}}\ :\ \textcolor{keyword}{public}\ QWidget}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classdb_window_a3d9db626cfb9d03189f02d2b92e5d858}{dbWindow}}(\mbox{\hyperlink{class_main_window}{MainWindow}}\ *mainWindow,\ QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{classdb_window_ae506e2ebcdc5892fdc745ca65c671fe4}{\string~dbWindow}}();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{class_main_window}{MainWindow}}\ *\mbox{\hyperlink{classdb_window_a70e0d6bd676ef99cb83098c23594ab48}{m\_mainWindow}};\ }
+\DoxyCodeLine{00051\ \ \ \ \ Ui::dbWindow\ *\mbox{\hyperlink{classdb_window_a7e19b503e3ac2fe8c37f87473ea0488e}{ui}};\ }
+\DoxyCodeLine{00052\ \ \ \ \ QVBoxLayout\ *\mbox{\hyperlink{classdb_window_a4068d3a77f056d61c23963b7e6031c64}{fileLayout}};\ }
+\DoxyCodeLine{00053\ \ \ \ \ QVBoxLayout\ *\mbox{\hyperlink{classdb_window_afd5efdc1f7bb8d8a0fc63aa9f1701b53}{cityLayout}};\ }
+\DoxyCodeLine{00054\ \ \ \ \ QWidget\ *\mbox{\hyperlink{classdb_window_a5a2ca3d7f599070dd8069ccc259df85a}{fileContainer}};\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdb_window_a15827f0333acc68d1bb7233dee745577}{loadCities}}();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdb_window_a8c240f159796dbac4cb4e6ade710cea4}{loadFilesForCity}}(\textcolor{keyword}{const}\ QString\ \&city);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdb_window_af71a84ce6315a79443628227f360f426}{loadJsonFile}}(\textcolor{keyword}{const}\ QString\ \&city,\ \textcolor{keyword}{const}\ QString\ \&fileName);}
+\DoxyCodeLine{00073\ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DBWINDOW\_H}}
+
+\end{DoxyCode}

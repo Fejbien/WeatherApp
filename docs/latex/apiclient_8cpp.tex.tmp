@@ -1,0 +1,17 @@
+\doxysection{apiclient.\+cpp File Reference}
+\hypertarget{apiclient_8cpp}{}\label{apiclient_8cpp}\index{apiclient.cpp@{apiclient.cpp}}
+
+
+Implementation of the \doxylink{class_api_client}{Api\+Client} class for GIOS API communication.  
+
+
+{\ttfamily \#include "{}Api\+Client.\+h"{}}\newline
+{\ttfamily \#include $<$QJson\+Array$>$}\newline
+{\ttfamily \#include $<$QJson\+Object$>$}\newline
+Include dependency graph for apiclient.\+cpp\+:
+% FIG 0
+
+
+\doxysubsection{Detailed Description}
+Implementation of the \doxylink{class_api_client}{Api\+Client} class for GIOS API communication. 
+

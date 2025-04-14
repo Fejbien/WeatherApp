@@ -1,0 +1,145 @@
+\doxysection{db Class Reference}
+\hypertarget{classdb}{}\label{classdb}\index{db@{db}}
+
+
+Provides static methods for data persistence operations.  
+
+
+
+
+{\ttfamily \#include $<$db.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static QString \mbox{\hyperlink{classdb_a33248192fd328e4cf713247730ff4c71}{get\+App\+Data\+Path}} ()
+\begin{DoxyCompactList}\small\item\em Gets the application data storage path. \end{DoxyCompactList}\item 
+static QString\+List \mbox{\hyperlink{classdb_a64c1a6ffbe5be75bd93e1fced34db3f6}{load\+City\+Data}} (const QString \&file\+Path)
+\begin{DoxyCompactList}\small\item\em Loads city data from a JSON file. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classdb_afab9fb90bb3a445c1414969f334fea14}{save\+Sensor\+Data}} (const QJson\+Object \&data, QString current\+Location)
+\begin{DoxyCompactList}\small\item\em Saves sensor data to a JSON file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static QMap$<$ QString, int $>$ \mbox{\hyperlink{classdb_af6cf4d85dadf26476c3639f7b32a1532}{id\+Map}}
+\begin{DoxyCompactList}\small\item\em Mapping between city display strings and their IDs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides static methods for data persistence operations. 
+
+This class handles\+:
+\begin{DoxyItemize}
+\item Application data directory management
+\item JSON data storage for sensor readings
+\item City data loading and mapping 
+\end{DoxyItemize}
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classdb_a33248192fd328e4cf713247730ff4c71}\index{db@{db}!getAppDataPath@{getAppDataPath}}
+\index{getAppDataPath@{getAppDataPath}!db@{db}}
+\doxysubsubsection{\texorpdfstring{getAppDataPath()}{getAppDataPath()}}
+{\footnotesize\ttfamily \label{classdb_a33248192fd328e4cf713247730ff4c71} 
+QString db\+::get\+App\+Data\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the application data storage path. 
+
+Implementation of \doxylink{classdb_a33248192fd328e4cf713247730ff4c71}{get\+App\+Data\+Path()}.
+
+\begin{DoxyReturn}{Returns}
+QString Absolute path to application data directory. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Creates the directory structure if it doesn\textquotesingle{}t exist.
+\end{DoxyNote}
+Creates the following directory structure if it doesn\textquotesingle{}t exist\+:
+\begin{DoxyItemize}
+\item App\+Data\+Location/
+\item App\+Data\+Location/db/ 
+\end{DoxyItemize}\Hypertarget{classdb_a64c1a6ffbe5be75bd93e1fced34db3f6}\index{db@{db}!loadCityData@{loadCityData}}
+\index{loadCityData@{loadCityData}!db@{db}}
+\doxysubsubsection{\texorpdfstring{loadCityData()}{loadCityData()}}
+{\footnotesize\ttfamily \label{classdb_a64c1a6ffbe5be75bd93e1fced34db3f6} 
+QString\+List db\+::load\+City\+Data (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads city data from a JSON file. 
+
+Implementation of \doxylink{classdb_a64c1a6ffbe5be75bd93e1fced34db3f6}{load\+City\+Data()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & Path to the JSON file containing city data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+QString\+List List of formatted city entries ("{}\+City, District, Province, Street"{}). 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Populates the id\+Map with corresponding IDs for each entry.
+\end{DoxyNote}
+Expected JSON format \begin{DoxyReturn}{Returns}
+QString\+List Formatted as "{}\+City, District, Province, Street"{} 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Returns empty list if\+:
+\begin{DoxyItemize}
+\item File cannot be opened
+\item JSON format is invalid 
+\end{DoxyItemize}
+\end{DoxyWarning}
+\Hypertarget{classdb_afab9fb90bb3a445c1414969f334fea14}\index{db@{db}!saveSensorData@{saveSensorData}}
+\index{saveSensorData@{saveSensorData}!db@{db}}
+\doxysubsubsection{\texorpdfstring{saveSensorData()}{saveSensorData()}}
+{\footnotesize\ttfamily \label{classdb_afab9fb90bb3a445c1414969f334fea14} 
+void db\+::save\+Sensor\+Data (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{data}{, }\item[{QString}]{current\+Location}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Saves sensor data to a JSON file. 
+
+Implementation of \doxylink{classdb_afab9fb90bb3a445c1414969f334fea14}{save\+Sensor\+Data()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & QJson\+Object containing sensor readings. \\
+\hline
+{\em current\+Location} & Location identifier for file organization. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Files are saved in App\+Data\+Location/db/\mbox{[}location\mbox{]}/ with timestamped filenames.
+\end{DoxyNote}
+Saves data with filename format\+: \mbox{[}key\mbox{]}\+\_\+\mbox{[}first\+Timestamp\mbox{]}\+\_\+\mbox{[}last\+Timestamp\mbox{]}.json \begin{DoxyWarning}{Warning}
+Skips saving if\+:
+\begin{DoxyItemize}
+\item Values array is empty
+\item File already exists
+\item File cannot be opened 
+\end{DoxyItemize}
+\end{DoxyWarning}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classdb_af6cf4d85dadf26476c3639f7b32a1532}\index{db@{db}!idMap@{idMap}}
+\index{idMap@{idMap}!db@{db}}
+\doxysubsubsection{\texorpdfstring{idMap}{idMap}}
+{\footnotesize\ttfamily \label{classdb_af6cf4d85dadf26476c3639f7b32a1532} 
+QMap$<$ QString, int $>$ db\+::id\+Map\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Mapping between city display strings and their IDs. 
+
+\begin{DoxyNote}{Note}
+Populated by \doxylink{classdb_a64c1a6ffbe5be75bd93e1fced34db3f6}{load\+City\+Data()}. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{db_8h}{db.\+h}}\item 
+\mbox{\hyperlink{db_8cpp}{db.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,61 @@
+\doxysection{main.\+cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+Main application entry point for the Air Quality Monitoring System.  
+
+
+{\ttfamily \#include "{}mainwindow.\+h"{}}\newline
+{\ttfamily \#include $<$QApplication$>$}\newline
+Include dependency graph for main.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Application entry point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main application entry point for the Air Quality Monitoring System. 
+
+This file contains the \doxylink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main()} function which initializes the Qt application and creates the main window. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Application entry point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Argument count. \\
+\hline
+{\em argv} & Argument vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Application exit code.
+\end{DoxyReturn}
+Initializes the Qt application and creates the main window\+:
+\begin{DoxyEnumerate}
+\item Creates QApplication instance (required for any Qt GUI application)
+\item Creates and shows the \doxylink{class_main_window}{Main\+Window}
+\item Enters the main event loop
+\end{DoxyEnumerate}
+
+\begin{DoxyNote}{Note}
+The QApplication object must be created before any Qt GUI components. 
+\end{DoxyNote}
+\texorpdfstring{$<$}{<} Main Qt application object
+
+\texorpdfstring{$<$}{<} Main application window
+
+\texorpdfstring{$<$}{<} Display the main window
+
+\texorpdfstring{$<$}{<} Enter main event loop

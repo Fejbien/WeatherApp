@@ -1,0 +1,203 @@
+\doxysection{db\+Window Class Reference}
+\hypertarget{classdb_window}{}\label{classdb_window}\index{dbWindow@{dbWindow}}
+
+
+Provides a GUI interface for browsing and loading saved sensor data.  
+
+
+
+
+{\ttfamily \#include $<$dbwindow.\+h$>$}
+
+
+
+Inheritance diagram for db\+Window\+:
+% FIG 0
+
+
+Collaboration diagram for db\+Window\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdb_window_a3d9db626cfb9d03189f02d2b92e5d858}{db\+Window}} (\mbox{\hyperlink{class_main_window}{Main\+Window}} \texorpdfstring{$\ast$}{*}main\+Window, QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructs the database browser window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classdb_window_ae506e2ebcdc5892fdc745ca65c671fe4}{\texorpdfstring{$\sim$}{\string~}db\+Window}} ()
+\begin{DoxyCompactList}\small\item\em Destroys the \doxylink{classdb_window}{db\+Window} instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classdb_window_a15827f0333acc68d1bb7233dee745577}{load\+Cities}} ()
+\begin{DoxyCompactList}\small\item\em Loads available cities from the database directory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdb_window_a8c240f159796dbac4cb4e6ade710cea4}{load\+Files\+For\+City}} (const QString \&city)
+\begin{DoxyCompactList}\small\item\em Loads JSON files for a specific city. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdb_window_af71a84ce6315a79443628227f360f426}{load\+Json\+File}} (const QString \&city, const QString \&file\+Name)
+\begin{DoxyCompactList}\small\item\em Loads and processes a specific JSON file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window}{Main\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classdb_window_a70e0d6bd676ef99cb83098c23594ab48}{m\+\_\+main\+Window}}
+\begin{DoxyCompactList}\small\item\em Reference to parent main window. \end{DoxyCompactList}\item 
+Ui\+::db\+Window \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classdb_window_a7e19b503e3ac2fe8c37f87473ea0488e}{ui}}
+\begin{DoxyCompactList}\small\item\em UI components. \end{DoxyCompactList}\item 
+QVBox\+Layout \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classdb_window_a4068d3a77f056d61c23963b7e6031c64}{file\+Layout}}
+\begin{DoxyCompactList}\small\item\em Layout for file buttons. \end{DoxyCompactList}\item 
+QVBox\+Layout \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classdb_window_afd5efdc1f7bb8d8a0fc63aa9f1701b53}{city\+Layout}}
+\begin{DoxyCompactList}\small\item\em Layout for city buttons. \end{DoxyCompactList}\item 
+QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classdb_window_a5a2ca3d7f599070dd8069ccc259df85a}{file\+Container}}
+\begin{DoxyCompactList}\small\item\em Container widget for scroll area. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides a GUI interface for browsing and loading saved sensor data. 
+
+The window displays\+:
+\begin{DoxyItemize}
+\item List of available cities (as directories)
+\item JSON files for selected city
+\item Allows loading data back into the main application 
+\end{DoxyItemize}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classdb_window_a3d9db626cfb9d03189f02d2b92e5d858}\index{dbWindow@{dbWindow}!dbWindow@{dbWindow}}
+\index{dbWindow@{dbWindow}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{dbWindow()}{dbWindow()}}
+{\footnotesize\ttfamily \label{classdb_window_a3d9db626cfb9d03189f02d2b92e5d858} 
+db\+Window\+::db\+Window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_main_window}{Main\+Window}} \texorpdfstring{$\ast$}{*}}]{main\+Window}{, }\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs the database browser window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em main\+Window} & Pointer to the parent \doxylink{class_main_window}{Main\+Window} instance \\
+\hline
+{\em parent} & Parent widget (optional)\\
+\hline
+\end{DoxyParams}
+Initializes UI elements including\+:
+\begin{DoxyItemize}
+\item City selection area
+\item Scrollable file list
+\item Sets window properties 
+\end{DoxyItemize}\Hypertarget{classdb_window_ae506e2ebcdc5892fdc745ca65c671fe4}\index{dbWindow@{dbWindow}!````~dbWindow@{\texorpdfstring{$\sim$}{\string~}dbWindow}}
+\index{````~dbWindow@{\texorpdfstring{$\sim$}{\string~}dbWindow}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}dbWindow()}{\string~dbWindow()}}
+{\footnotesize\ttfamily \label{classdb_window_ae506e2ebcdc5892fdc745ca65c671fe4} 
+db\+Window\+::\texorpdfstring{$\sim$}{\string~}db\+Window (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destroys the \doxylink{classdb_window}{db\+Window} instance. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classdb_window_a15827f0333acc68d1bb7233dee745577}\index{dbWindow@{dbWindow}!loadCities@{loadCities}}
+\index{loadCities@{loadCities}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{loadCities()}{loadCities()}}
+{\footnotesize\ttfamily \label{classdb_window_a15827f0333acc68d1bb7233dee745577} 
+void db\+Window\+::load\+Cities (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads available cities from the database directory. 
+
+Scans the database directory for subdirectories representing cities and creates clickable buttons for each one. \Hypertarget{classdb_window_a8c240f159796dbac4cb4e6ade710cea4}\index{dbWindow@{dbWindow}!loadFilesForCity@{loadFilesForCity}}
+\index{loadFilesForCity@{loadFilesForCity}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{loadFilesForCity()}{loadFilesForCity()}}
+{\footnotesize\ttfamily \label{classdb_window_a8c240f159796dbac4cb4e6ade710cea4} 
+void db\+Window\+::load\+Files\+For\+City (\begin{DoxyParamCaption}\item[{const QString \&}]{city}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads JSON files for a specific city. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em city} & Name of the city to load files for\\
+\hline
+{\em city} & Name of the city to load files for.\\
+\hline
+\end{DoxyParams}
+Clears previous file list and populates with new file buttons. \Hypertarget{classdb_window_af71a84ce6315a79443628227f360f426}\index{dbWindow@{dbWindow}!loadJsonFile@{loadJsonFile}}
+\index{loadJsonFile@{loadJsonFile}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{loadJsonFile()}{loadJsonFile()}}
+{\footnotesize\ttfamily \label{classdb_window_af71a84ce6315a79443628227f360f426} 
+void db\+Window\+::load\+Json\+File (\begin{DoxyParamCaption}\item[{const QString \&}]{city}{, }\item[{const QString \&}]{file\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads and processes a specific JSON file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em city} & City name where the file is located \\
+\hline
+{\em file\+Name} & Name of the JSON file to load\\
+\hline
+{\em city} & City name where the file is located. \\
+\hline
+{\em file\+Name} & Name of the JSON file to load.\\
+\hline
+\end{DoxyParams}
+Validates JSON format and sends data to \doxylink{class_main_window}{Main\+Window} for processing. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classdb_window_afd5efdc1f7bb8d8a0fc63aa9f1701b53}\index{dbWindow@{dbWindow}!cityLayout@{cityLayout}}
+\index{cityLayout@{cityLayout}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{cityLayout}{cityLayout}}
+{\footnotesize\ttfamily \label{classdb_window_afd5efdc1f7bb8d8a0fc63aa9f1701b53} 
+QVBox\+Layout\texorpdfstring{$\ast$}{*} db\+Window\+::city\+Layout\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Layout for city buttons. 
+
+\Hypertarget{classdb_window_a5a2ca3d7f599070dd8069ccc259df85a}\index{dbWindow@{dbWindow}!fileContainer@{fileContainer}}
+\index{fileContainer@{fileContainer}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{fileContainer}{fileContainer}}
+{\footnotesize\ttfamily \label{classdb_window_a5a2ca3d7f599070dd8069ccc259df85a} 
+QWidget\texorpdfstring{$\ast$}{*} db\+Window\+::file\+Container\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Container widget for scroll area. 
+
+\Hypertarget{classdb_window_a4068d3a77f056d61c23963b7e6031c64}\index{dbWindow@{dbWindow}!fileLayout@{fileLayout}}
+\index{fileLayout@{fileLayout}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{fileLayout}{fileLayout}}
+{\footnotesize\ttfamily \label{classdb_window_a4068d3a77f056d61c23963b7e6031c64} 
+QVBox\+Layout\texorpdfstring{$\ast$}{*} db\+Window\+::file\+Layout\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Layout for file buttons. 
+
+\Hypertarget{classdb_window_a70e0d6bd676ef99cb83098c23594ab48}\index{dbWindow@{dbWindow}!m\_mainWindow@{m\_mainWindow}}
+\index{m\_mainWindow@{m\_mainWindow}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{m\_mainWindow}{m\_mainWindow}}
+{\footnotesize\ttfamily \label{classdb_window_a70e0d6bd676ef99cb83098c23594ab48} 
+\mbox{\hyperlink{class_main_window}{Main\+Window}}\texorpdfstring{$\ast$}{*} db\+Window\+::m\+\_\+main\+Window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reference to parent main window. 
+
+\Hypertarget{classdb_window_a7e19b503e3ac2fe8c37f87473ea0488e}\index{dbWindow@{dbWindow}!ui@{ui}}
+\index{ui@{ui}!dbWindow@{dbWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily \label{classdb_window_a7e19b503e3ac2fe8c37f87473ea0488e} 
+Ui\+::db\+Window\texorpdfstring{$\ast$}{*} db\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+UI components. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{dbwindow_8h}{dbwindow.\+h}}\item 
+\mbox{\hyperlink{dbwindow_8cpp}{dbwindow.\+cpp}}\end{DoxyCompactItemize}

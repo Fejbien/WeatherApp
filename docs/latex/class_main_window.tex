@@ -1,0 +1,277 @@
+\doxysection{Main\+Window Class Reference}
+\hypertarget{class_main_window}{}\label{class_main_window}\index{MainWindow@{MainWindow}}
+
+
+{\ttfamily \#include $<$mainwindow.\+h$>$}
+
+
+
+Inheritance diagram for Main\+Window\+:
+% FIG 0
+
+
+Collaboration diagram for Main\+Window\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{Main\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+void \mbox{\hyperlink{class_main_window_a1e6ffc3b3ab230f94bb736e8cc1d09da}{handle\+Load\+Db}} (const QJson\+Object \&data, QString location)
+\begin{DoxyCompactList}\small\item\em Handles loading data from local database. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_main_window_a95f23320f1725a461a601a83bb7e0bac}{on\+City\+Search\+Clicked}} ()
+\begin{DoxyCompactList}\small\item\em Handles city search button click event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_ac21c71d80df4a3a31f8a5c1cb57f937e}{handle\+Stations\+Data}} (const QJson\+Array \&data)
+\begin{DoxyCompactList}\small\item\em Processes station list data and caches it locally. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_acd1011d95343adef4b472fd4ae474076}{handle\+Station\+Details}} (const QJson\+Object \&details)
+\begin{DoxyCompactList}\small\item\em Processes station details and creates sensor buttons. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_aac84bab6df5f353df88880927042ab28}{handle\+Sensor\+Data}} (const QJson\+Object \&data)
+\begin{DoxyCompactList}\small\item\em Processes and visualizes sensor data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a1008d34ce6e44d47f20442df3b0448d5}{handle\+Api\+Error}} (const QString \&error)
+\begin{DoxyCompactList}\small\item\em Handles API error messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_aacec2d651c5fb039c419d99441d3b5bd}{handle\+Status\+Changed}} (const QString \&status)
+\begin{DoxyCompactList}\small\item\em Updates status messages in the UI. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_afd42aabf306cc75eed36a753324a086c}{on\+\_\+city\+Search\+\_\+clicked}} ()
+\begin{DoxyCompactList}\small\item\em Slot for city search button (auto-\/connected by Qt). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a0067126c3b657cafbcc86bbac00ebbfe}{on\+\_\+db\+Opener\+\_\+clicked}} ()
+\begin{DoxyCompactList}\small\item\em Opens the database browser window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_main_window_ad73f31749d207b92051999af3e220cdd}{make\+Auto\+Complete}} ()
+\begin{DoxyCompactList}\small\item\em Initializes city search autocomplete. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_add23d9cc2c6b03dd20c8dcba2e8c9106}{clear\+Sensor\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Clears all sensor buttons from the UI and memory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\+::\+Main\+Window \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_main_window_a35466a70ed47252a0191168126a352a5}{ui}}
+\item 
+QVector$<$ QPush\+Button \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_main_window_a881fda8789d7005008373e0347d00fff}{sensor\+Buttons}}
+\item 
+\mbox{\hyperlink{class_api_client}{Api\+Client}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_main_window_a65e9034db7b7bd4bbc007b216514d2ae}{api\+Client}}
+\item 
+QChart\+View \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_main_window_a65fb64a7b9a722f77bfc022a9f4b5e8b}{chart\+View}} = nullptr
+\item 
+QString \mbox{\hyperlink{class_main_window_a82a7624b4ad7793f8b22bb1048d4911d}{current\+Location}}
+\item 
+\mbox{\hyperlink{classdb}{db}} \mbox{\hyperlink{class_main_window_a1f5e43e9f4bc1178326203639e08298f}{db\+Access}}
+\item 
+bool \mbox{\hyperlink{class_main_window_acc9cbc39273ec6f9528879617e423a66}{is\+From\+Internet}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_main_window_a996c5a2b6f77944776856f08ec30858d}\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily \label{class_main_window_a996c5a2b6f77944776856f08ec30858d} 
+Main\+Window\+::\+Main\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}\index{MainWindow@{MainWindow}!````~MainWindow@{\texorpdfstring{$\sim$}{\string~}MainWindow}}
+\index{````~MainWindow@{\texorpdfstring{$\sim$}{\string~}MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MainWindow()}{\string~MainWindow()}}
+{\footnotesize\ttfamily \label{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7} 
+Main\+Window\+::\texorpdfstring{$\sim$}{\string~}\+Main\+Window (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_main_window_add23d9cc2c6b03dd20c8dcba2e8c9106}\index{MainWindow@{MainWindow}!clearSensorButtons@{clearSensorButtons}}
+\index{clearSensorButtons@{clearSensorButtons}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{clearSensorButtons()}{clearSensorButtons()}}
+{\footnotesize\ttfamily \label{class_main_window_add23d9cc2c6b03dd20c8dcba2e8c9106} 
+void Main\+Window\+::clear\+Sensor\+Buttons (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Clears all sensor buttons from the UI and memory. 
+
+Removes buttons both from the layout and deallocates memory. \Hypertarget{class_main_window_a1008d34ce6e44d47f20442df3b0448d5}\index{MainWindow@{MainWindow}!handleApiError@{handleApiError}}
+\index{handleApiError@{handleApiError}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{handleApiError}{handleApiError}}
+{\footnotesize\ttfamily \label{class_main_window_a1008d34ce6e44d47f20442df3b0448d5} 
+void Main\+Window\+::handle\+Api\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{error}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Handles API error messages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error message to display. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a1e6ffc3b3ab230f94bb736e8cc1d09da}\index{MainWindow@{MainWindow}!handleLoadDb@{handleLoadDb}}
+\index{handleLoadDb@{handleLoadDb}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{handleLoadDb()}{handleLoadDb()}}
+{\footnotesize\ttfamily \label{class_main_window_a1e6ffc3b3ab230f94bb736e8cc1d09da} 
+void Main\+Window\+::handle\+Load\+Db (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{data}{, }\item[{QString}]{location}{}\end{DoxyParamCaption})}
+
+
+
+Handles loading data from local database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & JSON data loaded from file. \\
+\hline
+{\em location} & Location name associated with the data. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_aac84bab6df5f353df88880927042ab28}\index{MainWindow@{MainWindow}!handleSensorData@{handleSensorData}}
+\index{handleSensorData@{handleSensorData}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{handleSensorData}{handleSensorData}}
+{\footnotesize\ttfamily \label{class_main_window_aac84bab6df5f353df88880927042ab28} 
+void Main\+Window\+::handle\+Sensor\+Data (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Processes and visualizes sensor data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & JSON object containing sensor measurements.\\
+\hline
+\end{DoxyParams}
+Creates an interactive chart with time range sliders and statistics. Updates chart and statistics based on current slider positions.\Hypertarget{class_main_window_acd1011d95343adef4b472fd4ae474076}\index{MainWindow@{MainWindow}!handleStationDetails@{handleStationDetails}}
+\index{handleStationDetails@{handleStationDetails}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{handleStationDetails}{handleStationDetails}}
+{\footnotesize\ttfamily \label{class_main_window_acd1011d95343adef4b472fd4ae474076} 
+void Main\+Window\+::handle\+Station\+Details (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{details}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Processes station details and creates sensor buttons. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em details} & JSON object containing sensor information \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_ac21c71d80df4a3a31f8a5c1cb57f937e}\index{MainWindow@{MainWindow}!handleStationsData@{handleStationsData}}
+\index{handleStationsData@{handleStationsData}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{handleStationsData}{handleStationsData}}
+{\footnotesize\ttfamily \label{class_main_window_ac21c71d80df4a3a31f8a5c1cb57f937e} 
+void Main\+Window\+::handle\+Stations\+Data (\begin{DoxyParamCaption}\item[{const QJson\+Array \&}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Processes station list data and caches it locally. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & JSON array containing station data \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_aacec2d651c5fb039c419d99441d3b5bd}\index{MainWindow@{MainWindow}!handleStatusChanged@{handleStatusChanged}}
+\index{handleStatusChanged@{handleStatusChanged}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{handleStatusChanged}{handleStatusChanged}}
+{\footnotesize\ttfamily \label{class_main_window_aacec2d651c5fb039c419d99441d3b5bd} 
+void Main\+Window\+::handle\+Status\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Updates status messages in the UI. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Status message to display. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_ad73f31749d207b92051999af3e220cdd}\index{MainWindow@{MainWindow}!makeAutoComplete@{makeAutoComplete}}
+\index{makeAutoComplete@{makeAutoComplete}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{makeAutoComplete()}{makeAutoComplete()}}
+{\footnotesize\ttfamily \label{class_main_window_ad73f31749d207b92051999af3e220cdd} 
+void Main\+Window\+::make\+Auto\+Complete (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes city search autocomplete. 
+
+\Hypertarget{class_main_window_afd42aabf306cc75eed36a753324a086c}\index{MainWindow@{MainWindow}!on\_citySearch\_clicked@{on\_citySearch\_clicked}}
+\index{on\_citySearch\_clicked@{on\_citySearch\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_citySearch\_clicked}{on\_citySearch\_clicked}}
+{\footnotesize\ttfamily \label{class_main_window_afd42aabf306cc75eed36a753324a086c} 
+void Main\+Window\+::on\+\_\+city\+Search\+\_\+clicked (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Slot for city search button (auto-\/connected by Qt). 
+
+\Hypertarget{class_main_window_a0067126c3b657cafbcc86bbac00ebbfe}\index{MainWindow@{MainWindow}!on\_dbOpener\_clicked@{on\_dbOpener\_clicked}}
+\index{on\_dbOpener\_clicked@{on\_dbOpener\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_dbOpener\_clicked}{on\_dbOpener\_clicked}}
+{\footnotesize\ttfamily \label{class_main_window_a0067126c3b657cafbcc86bbac00ebbfe} 
+void Main\+Window\+::on\+\_\+db\+Opener\+\_\+clicked (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Opens the database browser window. 
+
+\Hypertarget{class_main_window_a95f23320f1725a461a601a83bb7e0bac}\index{MainWindow@{MainWindow}!onCitySearchClicked@{onCitySearchClicked}}
+\index{onCitySearchClicked@{onCitySearchClicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onCitySearchClicked}{onCitySearchClicked}}
+{\footnotesize\ttfamily \label{class_main_window_a95f23320f1725a461a601a83bb7e0bac} 
+void Main\+Window\+::on\+City\+Search\+Clicked (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Handles city search button click event. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_main_window_a65e9034db7b7bd4bbc007b216514d2ae}\index{MainWindow@{MainWindow}!apiClient@{apiClient}}
+\index{apiClient@{apiClient}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{apiClient}{apiClient}}
+{\footnotesize\ttfamily \label{class_main_window_a65e9034db7b7bd4bbc007b216514d2ae} 
+\mbox{\hyperlink{class_api_client}{Api\+Client}}\texorpdfstring{$\ast$}{*} Main\+Window\+::api\+Client\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_main_window_a65fb64a7b9a722f77bfc022a9f4b5e8b}\index{MainWindow@{MainWindow}!chartView@{chartView}}
+\index{chartView@{chartView}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{chartView}{chartView}}
+{\footnotesize\ttfamily \label{class_main_window_a65fb64a7b9a722f77bfc022a9f4b5e8b} 
+QChart\+View\texorpdfstring{$\ast$}{*} Main\+Window\+::chart\+View = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_main_window_a82a7624b4ad7793f8b22bb1048d4911d}\index{MainWindow@{MainWindow}!currentLocation@{currentLocation}}
+\index{currentLocation@{currentLocation}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{currentLocation}{currentLocation}}
+{\footnotesize\ttfamily \label{class_main_window_a82a7624b4ad7793f8b22bb1048d4911d} 
+QString Main\+Window\+::current\+Location\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_main_window_a1f5e43e9f4bc1178326203639e08298f}\index{MainWindow@{MainWindow}!dbAccess@{dbAccess}}
+\index{dbAccess@{dbAccess}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{dbAccess}{dbAccess}}
+{\footnotesize\ttfamily \label{class_main_window_a1f5e43e9f4bc1178326203639e08298f} 
+\mbox{\hyperlink{classdb}{db}} Main\+Window\+::db\+Access\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_main_window_acc9cbc39273ec6f9528879617e423a66}\index{MainWindow@{MainWindow}!isFromInternet@{isFromInternet}}
+\index{isFromInternet@{isFromInternet}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{isFromInternet}{isFromInternet}}
+{\footnotesize\ttfamily \label{class_main_window_acc9cbc39273ec6f9528879617e423a66} 
+bool Main\+Window\+::is\+From\+Internet\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_main_window_a881fda8789d7005008373e0347d00fff}\index{MainWindow@{MainWindow}!sensorButtons@{sensorButtons}}
+\index{sensorButtons@{sensorButtons}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{sensorButtons}{sensorButtons}}
+{\footnotesize\ttfamily \label{class_main_window_a881fda8789d7005008373e0347d00fff} 
+QVector$<$QPush\+Button\texorpdfstring{$\ast$}{*}$>$ Main\+Window\+::sensor\+Buttons\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_main_window_a35466a70ed47252a0191168126a352a5}\index{MainWindow@{MainWindow}!ui@{ui}}
+\index{ui@{ui}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily \label{class_main_window_a35466a70ed47252a0191168126a352a5} 
+Ui\+::\+Main\+Window\texorpdfstring{$\ast$}{*} Main\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mainwindow_8h}{mainwindow.\+h}}\item 
+\mbox{\hyperlink{mainwindow_8cpp}{mainwindow.\+cpp}}\end{DoxyCompactItemize}
