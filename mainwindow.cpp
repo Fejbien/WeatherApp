@@ -183,8 +183,8 @@ void MainWindow::handleSensorData(const QJsonObject &data)
     QString paramName = data["key"].toString();
 
     // Initialize statistics tracking
-    double minValue = std::numeric_limits<double>::max();
-    double maxValue = std::numeric_limits<double>::min();
+    double minValue = 99999;
+    double maxValue = -99999;
     double sum = 0;
     int validCount = 0;
     QDateTime minDate, maxDate;
